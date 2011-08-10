@@ -1,11 +1,15 @@
 #!/usr/bin/perl
-# A simple web server that just listens for textarea filter requests
-# and runs an editor to manipulate the text.  Is intended to be
-# used with the TextAid extention for Chrome.
+
+# This is based on the code found at http://opencoder.net/edit-server.  Any
+# errors introduced into this code are solely my fault.
+
+# A simple web server that just listens for textarea filter requests and runs
+# an editor to manipulate the text.  Is intended to be used with the TextAid
+# extention for Chrome.
 #
-# NOTE:  If you use this on a shared system, you should configure TextAid
-# with a username & password and make sure that the saved authorization
-# config file stays secret!
+# NOTE:  If you use this on a shared system, you should configure TextAid with
+# a username & password and make sure that the saved authorization config file
+# stays secret!
 
 use strict;
 use warnings;
@@ -14,11 +18,12 @@ use Socket;
 use IO::Select;
 use File::Temp;
 
-# If you don't want to require authentication, set $REQUIRE_AUTH to 0.
-# When it is set to 1, the first authenticated request that is received
-# will be saved to the $SAVE_AUTH_FILE file.  All subsequent requests
-# are compared to that value.  To change your password, just remove the
-# file and make a new edit-server request using the new auth info.
+# If you don't want to require authentication, set $REQUIRE_AUTH to 0.  When it
+# is set to 1, the first authenticated request that is received will be saved
+# to the $SAVE_AUTH_FILE file.  All subsequent requests are compared to that
+# value.  To change your password, just remove the file and make a new
+# edit-server request using the new auth info.
+
 our $REQUIRE_AUTH   = 0;
 our $SAVE_AUTH_FILE = "$ENV{HOME}/.edit-server-auth";
 
@@ -63,7 +68,8 @@ my $sel = do {
   $s->add( *S );
 
   $s;
-};
+
+}; ## end my $sel
 
 while ( 1 ) {
 
@@ -80,11 +86,12 @@ while ( 1 ) {
     $t->detach();
 
   }
-}
+} ## end while ( 1 )
 
 exit;
 
-# Read the text from the content body, edit it, and write it back as our output.
+# Read the text from the content body, edit it, and write it back as our
+# output.
 sub do_edit {
 
   my ( $fh ) = @_;
